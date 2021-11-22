@@ -16,7 +16,7 @@ public class UseHttpClient {
 
     public static void main(String[] args) {
         //设置url
-        String url="http://127.0.0.1:8888/";
+        String url="http://127.0.0.1:8888/open";
         String requestBody="";
         long startTime = System.currentTimeMillis();
         String response=sendMessage(url);
@@ -32,13 +32,23 @@ public class UseHttpClient {
         String responseBody = "";
         try {
             CloseableHttpResponse response = httpClient.execute(httpGet);
-            HttpEntity entity = response.getEntity();
-            responseBody = EntityUtils.toString(entity);
+            int code = response.getCode();
+            System.out.println("code = " + code);
+            if (code > 200) {
+                HttpEntity entity = response.getEntity();
+                responseBody = EntityUtils.toString(entity);
+                System.out.println("responseBody = " + responseBody);
 
-            Header kk = response.getHeader("kk");
-            String value = kk.getValue();
-            System.out.println("responseBody = " + responseBody);
-            System.out.println("header value mao = " + value);
+            }else {
+                HttpEntity entity = response.getEntity();
+                responseBody = EntityUtils.toString(entity);
+
+                Header kk = response.getHeader("kk");
+                String value = kk.getValue();
+                System.out.println("responseBody = " + responseBody);
+                System.out.println("header value mao = " + value);
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ParseException e) {

@@ -12,7 +12,7 @@ public class HttpServer03 {
     public static void main(String[] args) throws IOException{
         ExecutorService executorService = Executors.newFixedThreadPool(
                 Runtime.getRuntime().availableProcessors() * 4);
-        final ServerSocket serverSocket = new ServerSocket(8088);
+        final ServerSocket serverSocket = new ServerSocket(8808);
         while (true) {
             try {
                 final Socket socket = serverSocket.accept();
@@ -25,6 +25,7 @@ public class HttpServer03 {
     
     private static void service(Socket socket) {
         try {
+            System.out.println("test = " + socket.toString());
             PrintWriter printWriter = new PrintWriter(socket.getOutputStream(), true);
             printWriter.println("HTTP/1.1 200 OK");
             printWriter.println("Content-Type:text/html;charset=utf-8");

@@ -2,7 +2,6 @@ package gateway.filter;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.FullHttpRequest;
-import io.netty.util.internal.StringUtil;
 
 public class CustomerFilter implements HttpRequestFilter {
     private final static String login="/login";
@@ -20,9 +19,12 @@ public class CustomerFilter implements HttpRequestFilter {
             if (null != auth && !"".equals(auth)) {
                 return;
             }else {
-                throw new RuntimeException("权限认证失败");
+//                throw new RuntimeException("权限认证失败");
+                fullRequest.headers().set("code","503");
+                fullRequest.headers().set("msg", "权限认证失败");
             }
         }
 
     }
+
 }
